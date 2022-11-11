@@ -29,9 +29,9 @@ h3.fill(np.nan)
 h4 = np.empty(len(t))
 h4.fill(np.nan)
 
-r = 0.31e2
-mu = 0.4e2
-sigma = 0.55e2
+r = 31
+mu = 40
+sigma = 55
 a4 = 3019
 
 h3[0]=0
