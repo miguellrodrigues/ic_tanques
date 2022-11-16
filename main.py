@@ -32,9 +32,9 @@ mu = .40
 sigma = .55
 A2 = .3019
 
-z1_bounds = np.array([124.6572, 216.3098])
-z2_bounds = np.array([118.4579, 338.5220])
-z3_bounds = np.array([.0004, .0048])
+z1_bounds = np.array([-.5160, 2.3060])
+z2_bounds = np.array([.0033, .0077])
+z3_bounds = np.array([3.4478, 18.4570])
 
 def calculate_pertinence_functions_values(h3, h4):
     diff = h3 - h4
@@ -62,32 +62,41 @@ def calculate_pertinence_functions_values(h3, h4):
 M1_real, N1_real, O1_real, _, _, _ = calculate_pertinence_functions_values(Level3CM, Level4CM)
 M1_filtered, N1_filtered, O1_filtered, _, _, _ = calculate_pertinence_functions_values(Level3CM_filtered, Level4CM_filtered)
 
+M1_real = M1_real[100:]
+N1_real = N1_real[100:]
+O1_real = O1_real[100:]
+
+M1_filtered = M1_filtered[100:]
+N1_filtered = N1_filtered[100:]
+O1_filtered = O1_filtered[100:]
+
 # create 3 subplots each one for a pertinence function
-# fig, axs = plt.subplots(3, 1)
-# fig.suptitle('Pertinence functions')
+fig, axs = plt.subplots(3, 1)
+fig.suptitle('Pertinence functions')
 
-# axs[0].plot(M1_real, label='M1')
-# axs[0].plot(M1_filtered, label='M1 filtered')
-# axs[0].set_title('M1')
+axs[0].plot(M1_real, label='M1')
+axs[0].plot(M1_filtered, label='M1 filtered')
+axs[0].set_title('M1')
+axs[0].set_ylim(0, 1)
 
-# axs[1].plot(N1_real, label='N1')
-# axs[1].plot(N1_filtered, label='N1 filtered')
-# axs[1].set_title('N1')
+axs[1].plot(N1_real, label='N1')
+axs[1].plot(N1_filtered, label='N1 filtered')
+axs[1].set_title('N1')
+axs[1].set_ylim(0, 1)
 
-# axs[2].plot(O1_real, label='O1')
-# axs[2].plot(O1_filtered, label='O1 filtered')
-# axs[2].set_title('O1')
+axs[2].plot(O1_real, label='O1')
+axs[2].plot(O1_filtered, label='O1 filtered')
+axs[2].set_title('O1')
+axs[2].set_ylim(0, 1)
 
-plt.plot(N1_real)
-plt.plot(N1_filtered)
+max_m1_diff = np.max(np.abs(M1_real - M1_filtered))
+max_n1_diff = np.max(np.abs(N1_real - N1_filtered))
+max_o1_diff = np.max(np.abs(O1_real - O1_filtered))
+
+print(' ')
+print('max_m1_diff = ', max_m1_diff)
+print('max_n1_diff = ', max_n1_diff)
+print('max_o1_diff = ', max_o1_diff)
+print(' ')
+
 plt.show()
-
-# plot the data
-# plt.plot(Level3CM, label='Level3CM')
-# plt.plot(Level4CM, label='Level4CM')
-
-# plt.plot(Level3CM_filtered, 'k', label='Level3Filt')
-# plt.plot(Level4CM_filtered, 'k', label='Level4Filt')
-
-# plt.legend()
-# plt.show()
