@@ -3,6 +3,10 @@ import scipy.signal as sig
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.style.use([
+    'science',
+    'nature'
+])
 
 mat = sio.loadmat('./data/data.mat')
 
@@ -30,6 +34,7 @@ plt.ylabel('Amplitude [dB]')
 plt.margins(0, 0.1)
 plt.grid(which='both', axis='both')
 plt.axvline(100, color='green') # cutoff frequency
+plt.savefig('butterworth_filter_frequency_response.png', dpi=300)
 
 # filter the data
 Level3CM_filtered = sig.lfilter(b, a, Level3CM)
@@ -89,22 +94,21 @@ O1_filtered = O1_filtered[100:]
 
 # create 3 subplots each one for a pertinence function
 fig, axs = plt.subplots(3, 1)
-fig.suptitle('Pertinence functions')
 
 axs[0].plot(M1_real, label='M1')
 axs[0].plot(M1_filtered, label='M1 filtered')
 axs[0].set_title('M1')
-axs[0].set_ylim(0, 1)
+axs[0].set_ylim(np.max(M1_real)/2, np.max(M1_real)+.2)
 
 axs[1].plot(N1_real, label='N1')
 axs[1].plot(N1_filtered, label='N1 filtered')
 axs[1].set_title('N1')
-axs[1].set_ylim(0, 1)
+axs[1].set_ylim(0, np.max(N1_real))
 
 axs[2].plot(O1_real, label='O1')
 axs[2].plot(O1_filtered, label='O1 filtered')
 axs[2].set_title('O1')
-axs[2].set_ylim(0, 1)
+axs[2].set_ylim(0, np.max(O1_real))
 
 max_m1_diff = np.max(np.abs(M1_real - M1_filtered))
 max_n1_diff = np.max(np.abs(N1_real - N1_filtered))
@@ -116,4 +120,5 @@ print('max_n1_diff = ', max_n1_diff)
 print('max_o1_diff = ', max_o1_diff)
 print(' ')
 
+plt.savefig('pertinence_functions.png', dpi=300)
 plt.show()
