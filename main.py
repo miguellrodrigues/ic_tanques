@@ -21,9 +21,26 @@ b, a = sig.butter(1, cut_off_freq/2*np.pi, 'low', analog=False, fs=1/sampling_pe
 print('b = ', b)
 print('a = ', a)
 
+plt.figure()
+w, h = sig.freqs(b, a)
+plt.semilogx(w, 20 * np.log10(abs(h)))
+plt.title('Butterworth filter frequency response')
+plt.xlabel('Frequency [radians / second]')
+plt.ylabel('Amplitude [dB]')
+plt.margins(0, 0.1)
+plt.grid(which='both', axis='both')
+plt.axvline(100, color='green') # cutoff frequency
+
 # filter the data
 Level3CM_filtered = sig.lfilter(b, a, Level3CM)
 Level4CM_filtered = sig.lfilter(b, a, Level4CM)
+
+plt.figure()
+plt.plot(Level3CM)
+plt.plot(Level4CM)
+
+plt.plot(Level3CM_filtered)
+plt.plot(Level4CM_filtered)
 
 # # # # # # # # # # #
 
