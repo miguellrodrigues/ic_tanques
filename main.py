@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 plt.style.use([
     'science',
-    'nature'
+    'notebook'
 ])
 
 mat = sio.loadmat('./data/data.mat')
@@ -15,11 +15,13 @@ Level4CM = np.array(mat['Level4CM'][0])
 Pum2PC   = np.array(mat['Pump2PC'][0])
 
 
-cut_off_freq = 0.01 # rad/s
+# cut_off_freq = 0.025 # rad/s
+cut_off_freq = np.pi/2 * 1e-2 # rad/s
 sampling_period = .5 # seconds
 
 # first order filter with 10 Hz cut-off frequency
-b, a = sig.butter(1, cut_off_freq/2*np.pi, 'low', analog=False, fs=1/sampling_period)
+# b, a = sig.butter(1, [1e-6, .03], 'bandpass', analog=False, fs=1/sampling_period)
+b, a = sig.butter(1, cut_off_freq, 'low', analog=False, fs=1/sampling_period)
 
 # print transfer function fo the filter
 print('b = ', b)
@@ -33,8 +35,8 @@ plt.xlabel('Frequency [radians / second]')
 plt.ylabel('Amplitude [dB]')
 plt.margins(0, 0.1)
 plt.grid(which='both', axis='both')
-plt.axvline(100, color='green') # cutoff frequency
-plt.savefig('butterworth_filter_frequency_response.png', dpi=300)
+plt.axvline(x=cut_off_freq, color='r', linestyle='--')
+# plt.savefig('butterworth_filter_frequency_response.png', dpi=300)
 
 # filter the data
 Level3CM_filtered = sig.lfilter(b, a, Level3CM)
@@ -98,7 +100,7 @@ fig, axs = plt.subplots(3, 1)
 axs[0].plot(M1_real, label='M1')
 axs[0].plot(M1_filtered, label='M1 filtered')
 axs[0].set_title('M1')
-axs[0].set_ylim(np.max(M1_real)/2, np.max(M1_real)+.2)
+axs[0].set_ylim(.0, np.max(M1_real))
 
 axs[1].plot(N1_real, label='N1')
 axs[1].plot(N1_filtered, label='N1 filtered')
@@ -120,5 +122,4 @@ print('max_n1_diff = ', max_n1_diff)
 print('max_o1_diff = ', max_o1_diff)
 print(' ')
 
-plt.savefig('pertinence_functions.png', dpi=300)
 plt.show()
