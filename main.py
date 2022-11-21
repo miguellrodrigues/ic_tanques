@@ -1,5 +1,6 @@
 import scipy.io as sio
 import scipy.signal as sig
+import control as ct
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -16,12 +17,18 @@ Pum2PC   = np.array(mat['Pump2PC'][0])
 
 
 # cut_off_freq = 0.025 # rad/s
-cut_off_freq = np.pi/2 * 1e-2 # rad/s
+cut_off_freq = (2*np.pi)/(10) # rad/s
 sampling_period = .5 # seconds
 
-# first order filter with 10 Hz cut-off frequency
-# b, a = sig.butter(1, [1e-6, .03], 'bandpass', analog=False, fs=1/sampling_period)
-b, a = sig.butter(1, cut_off_freq, 'low', analog=False, fs=1/sampling_period)
+b, a = sig.butter(1, cut_off_freq, 'low', analog=True)
+
+G = ct.tf(b, a)
+Z = ct.c2d(G, sampling_period, 'tustin')
+
+num_z, den_z = ct.tfdata(Z)
+
+b = num_z[0][0]
+a = den_z[0][0]
 
 # print transfer function fo the filter
 print('b = ', b)
