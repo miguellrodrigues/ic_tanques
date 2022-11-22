@@ -26,6 +26,9 @@ plt.plot(h4_matlab, '-', label='matlab')
 plt.plot(h4_py, label='python')
 plt.legend()
 
+print(np.max(h3_matlab - h3_py))
+print(np.max(h4_matlab - h4_py))
+
 plt.savefig('./images/comparsion.png', dpi=300)
 
 plt.show()
