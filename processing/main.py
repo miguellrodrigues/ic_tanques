@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 
 plt.style.use([
     'science',
-    'notebook'
+    'notebook',
+    'grid',
 ])
 
 mat = sio.loadmat('./data/data.mat')
@@ -23,6 +24,10 @@ sampling_period = .5 # seconds
 b, a = sig.butter(1, cut_off_freq, 'low', analog=True)
 
 G = ct.tf(b, a)
+
+# ct.bode(G, dB=True, Hz=True, omega_limits=(1e-2, 1e2), omega_num=1000)
+# plt.show()
+
 Z = ct.c2d(G, sampling_period, 'tustin')
 
 num_z, den_z = ct.tfdata(Z)
@@ -42,19 +47,22 @@ plt.xlabel('Frequency [radians / second]')
 plt.ylabel('Amplitude [dB]')
 plt.margins(0, 0.1)
 plt.grid(which='both', axis='both')
-plt.axvline(x=cut_off_freq, color='r', linestyle='--')
-# plt.savefig('butterworth_filter_frequency_response.png', dpi=300)
+plt.savefig('butterworth_filter_frequency_response.png', dpi=300)
 
 # filter the data
 Level3CM_filtered = sig.lfilter(b, a, Level3CM)
 Level4CM_filtered = sig.lfilter(b, a, Level4CM)
 
 plt.figure()
-plt.plot(Level3CM)
-plt.plot(Level4CM)
+plt.plot(Level3CM, 'k', label='Level3CM')
+plt.plot(Level4CM, 'g', label='Level4CM')
 
-plt.plot(Level3CM_filtered)
-plt.plot(Level4CM_filtered)
+plt.plot(Level3CM_filtered, 'b-', label='Level3CM filtered')
+plt.plot(Level4CM_filtered, 'r-', label='Level4CM filtered')
+
+plt.legend()
+
+plt.savefig('filtered_data.png', dpi=300)
 
 # # # # # # # # # # #
 
