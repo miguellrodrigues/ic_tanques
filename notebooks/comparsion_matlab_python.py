@@ -11,12 +11,12 @@ plt.style.use([
 ])
 
 
-h3_matlab = np.array(loadmat('./data/h3_matlab.mat')['h3'])
-h4_matlab = np.array(loadmat('./data/h4_matlab.mat')['h4'])
+h3_matlab = np.array(loadmat('./mats/h3_matlab.mat')['h3'])
+h4_matlab = np.array(loadmat('./mats/h4_matlab.mat')['h4'])
 
 
-h3_py     = np.load('./data/h3_py.npy')
-h4_py     = np.load('./data/h4_py.npy')
+h3_py     = np.load('./discrete/data/h3_py.npy')
+h4_py     = np.load('./discrete/data/h4_py.npy')
 
 
 plt.figure()
@@ -25,10 +25,4 @@ plt.plot(h3_py, label='python')
 plt.plot(h4_matlab, '-', label='matlab')
 plt.plot(h4_py, label='python')
 plt.legend()
-
-print(np.max(h3_matlab - h3_py))
-print(np.max(h4_matlab - h4_py))
-
-plt.savefig('./images/comparsion.png', dpi=300)
-
 plt.show()
