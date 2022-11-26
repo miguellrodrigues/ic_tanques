@@ -18,6 +18,10 @@ h3 = np.array(data['Level3CM'][0])
 h4 = np.array(data['Level4CM'][0])
 u  = np.array(data['Pump2PC' ][0])
 
+np.save('h3_exp.npy', h3)
+np.save('h4_exp.npy', h4)
+np.save('u.npy', u)
+
 # # # # #
 
 b = np.array([0.13575525, 0.13575525])
