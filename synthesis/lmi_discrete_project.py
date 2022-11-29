@@ -27,7 +27,7 @@ def find_controller(A, B):
 
   constraints = [W >> np.eye(n) * 1e-6]
 
-  rho = 30
+  rho = 1
 
   def LMI(i, j):
     alpha = .5 if i == j else 1
@@ -65,7 +65,7 @@ def find_controller(A, B):
     # # LMI 2
 
     LMI2_11 = W
-    LMI2_12 = alpha * (Li.T + Lj.T) - Z.T
+    LMI2_12 = alpha * (Li + Lj).T - Z.T
     LMI2_21 = alpha * (Li + Lj) - Z
     LMI2_22 = np.array([
       [rho ** 2]

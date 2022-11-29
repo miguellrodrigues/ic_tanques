@@ -2,7 +2,7 @@ import cvxpy as cvx
 import numpy as np
 import matplotlib.pyplot as plt
 
-np.set_printoptions(3, suppress=True)
+np.set_printoptions(6, suppress=True)
 
 plt.style.use([
     'notebook',
@@ -10,8 +10,24 @@ plt.style.use([
     'grid',
 ])
 
-A = [np.load(f'./data/A_{i}.npy') for i in range(8)]
-B = [np.load(f'./data/B_{i}.npy') for i in range(8)]
+# A = [np.load(f'./data/A_{i}.npy') for i in range(8)]
+# B = [np.load(f'./data/B_{i}.npy') for i in range(8)]
+
+A = []
+B = []
+
+for _ in range(8):
+  A.append(
+    np.array([
+      [0., 1.],
+      [-np.random.randint(-5, 10), np.random.randint(5, 10)],
+    ])
+  )
+
+  B.append(np.array([
+    [.0],
+    [1.]
+  ]))
 
 n = A[0].shape[0]
 nu = B[0].shape[1]
@@ -26,6 +42,9 @@ constraints = [
   W >> np.eye(n)*1e-6
 ]
 
+r = 1
+q = 2
+
 for i in range(n_matrices):
   for j in range(i, n_matrices):
     alpha = .5 if i == j else 1
@@ -39,9 +58,15 @@ for i in range(n_matrices):
     Zi = Z[i]
     Zj = Z[j]
 
-    LMI = W@(Ai+Aj).T + (Zj.T@Bi.T + Zi.T@Bj.T) + (Ai+Aj)@W + Bi@Zj + Bj@Zi
+    # LMI = alpha*(W@(Ai+Aj).T + (Zj.T@Bi.T + Zi.T@Bj.T) + (Ai+Aj)@W + Bi@Zj + Bj@Zi)
 
-    constraints.append(LMI << -np.eye(n)*1e-6)
+    LMI = cvx.bmat([
+      [-r*W, q*W + alpha*((Ai+Aj)@W + (Bi@Zj + Bj@Zi))],
+      [q*W + alpha*(W@(Ai+Aj).T + (Zj.T@Bi.T + Zi.T@Bj.T)), -r*W]
+    ])
+
+    constraints.append(LMI << -np.eye(LMI.shape[0])*1e-6)
+    # constraints.append(LMI2 << -np.eye(n)*1e-6)
 
 prob = cvx.Problem(cvx.Minimize(0), constraints)
 prob.solve(verbose=False, solver='MOSEK')
@@ -61,7 +86,8 @@ print(' ')
 for i in range(n_matrices):
   Ki = Z[i].value @ P
 
-  print(f'K{i} = ', Ki)
+  # print(np.linalg.eigvals(A[i] + B[i]@Ki))
+  print(Ki)
   print(' ')
 
 theta_step = .01
