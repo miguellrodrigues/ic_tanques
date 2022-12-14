@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from experiment_loader import load_data
+from scipy.optimize import curve_fit
 
 
 np.set_printoptions(precision=6, suppress=True)
@@ -30,21 +31,20 @@ y = []
 for i in u:
     t, levels = load_data(f'./q34_data/VAZAO_COMUNICANTE_{i}', keys=['t', 'Level3CM', 'Level4CM'])
 
-    h1 = levels[0]
-    h2 = levels[1]
+    h1 = levels[0][-1]
+    h2 = levels[1][-1]
 
-    R34 = (h1[-1] - h2[-1]) / q_in(i)
+    diff = h1 - h2
 
-    x.append(h1[-1] - h2[-1])
+    R34 = diff / q_in(i)
+
+    x.append(diff)
     y.append(R34)
 
 # # # # # # # # # # # # # # # # # # # #
 
-from scipy.optimize import curve_fit
-
 def func(x, a, b):
     return a * np.exp(-b * x)
-
 
 x = np.array(x)
 y = np.array(y)
