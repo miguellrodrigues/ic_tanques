@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from experimente_loader import load_data
+from experiment_loader import load_data
 
 
 np.set_printoptions(precision=6, suppress=True)

@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
-from experimente_loader import load_data
+from experiment_loader import load_data
 
 
 np.set_printoptions(precision=6, suppress=True)
