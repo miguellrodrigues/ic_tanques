@@ -19,7 +19,7 @@ x = range(10, 70, 5)
 y = []
 
 for i in x:
-    t, levels = load_data(f'./qin_data/VAZAO_ENTRADA_{i}')
+    t, levels = load_data(f'./q34_data/VAZAO_COMUNICANTE_{i}')
     h = levels[0]
 
     area = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h - mu)**2) / (2 * sigma ** 2)))

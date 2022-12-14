@@ -1,17 +1,18 @@
 import cvxpy as cvx
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.set_printoptions(3, suppress=True)
 
 plt.style.use([
-    'notebook',
-    'high-vis',
-    'grid',
+  'notebook',
+  'high-vis',
+  'grid',
 ])
 
 A_matrices = [np.load(f'./data/A_{i}.npy') for i in range(8)]
 B_matrices = [np.load(f'./data/B_{i}.npy') for i in range(8)]
+
 
 def find_controller(A, B):
   n = A[0].shape[0]
@@ -44,13 +45,13 @@ def find_controller(A, B):
     # # LMI 1
     LMI1_11 = -W
     LMI1_12 = -Z.T
-    LMI1_13 = alpha * ( (Li.T@Bj.T + Lj.T@Bi.T) + (W.T @ (Ai.T + Aj.T)) )
+    LMI1_13 = alpha * ((Li.T @ Bj.T + Lj.T @ Bi.T) + (W.T @ (Ai.T + Aj.T)))
 
     LMI1_21 = -Z
     LMI1_22 = -2 * S
-    LMI1_23 =  S @ (alpha * (Bi.T + Bj.T))
+    LMI1_23 = S @ (alpha * (Bi.T + Bj.T))
 
-    LMI1_31 = alpha * ( (Ai + Aj) @ W + (Bi@Lj + Bj@Li) )
+    LMI1_31 = alpha * ((Ai + Aj) @ W + (Bi @ Lj + Bj @ Li))
     LMI1_32 = alpha * (Bi + Bj) @ S
     LMI1_33 = -W
 
@@ -104,16 +105,17 @@ def find_controller(A, B):
 
   for i in range(n_matrices):
     Li = np.array(L[i].value)
-    Ki = Li@P_arr
+    Ki = Li @ P_arr
 
     K.append(Ki)
 
   return K, P_arr
 
+
 if __name__ == '__main__':
   K, P = find_controller(A_matrices, B_matrices)
 
-  if K == None:
+  if K is None:
     print('No controller found')
     exit()
 
@@ -124,7 +126,7 @@ if __name__ == '__main__':
 
   theta_step = .01
 
-  theta = np.arange(0, 2*np.pi, theta_step)
+  theta = np.arange(0, 2 * np.pi, theta_step)
 
   circle = np.array([np.cos(theta), np.sin(theta)])
   output = np.linalg.inv(np.linalg.cholesky(P)) @ circle

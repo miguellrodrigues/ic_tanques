@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fa02c562-e90e-4d80-8fd8-2f4a6f833ef0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/synthesis/d_circle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/h3_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/h3_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/h4_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/h4_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/A_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/data/vertices/B_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/fuzzy_expr_continous.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/fuzzy_expr_continous.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/continous/sim_fuzzy_continous.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/continous/sim_fuzzy_continous.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/h3_0.5_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/h3_0.5_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/h3_4_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/h3_4_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/h4_0.5_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/h4_0.5_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/h4_4_py.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/h4_4_py.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/A_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices/B_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/vertices_0.5_Ts.mat" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/vertices_0.5_Ts.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/z1_bounds.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/z1_bounds.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/data/z2_bounds.npy" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/data/z2_bounds.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/fuzzy_expr_discrete.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/fuzzy_expr_discrete.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notebooks/discrete/sim_fuzzy_discrete.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/notebooks/discrete/sim_fuzzy_discrete.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/converter.py" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/converter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/A_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/A_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_0.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_0.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_1.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_1.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_2.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_2.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_3.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_3.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_4.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_4.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_5.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_5.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_6.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_6.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/data/B_7.npy" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/data/B_7.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/lmi_discrete_project.py" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/lmi_discrete_project.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/synthesis/lyapunov_quadratic.py" beforeDir="false" afterPath="$PROJECT_DIR$/synthesis/lyapunov_quadratic.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2IF2eXgdXUno2Iyk4alQhNxosSX" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/miguel/Documentos/projects/tanques/synthesis/data",
+    "settings.editor.selected.configurable": "preferences.rainbow.brackets"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/synthesis/data" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fa02c562-e90e-4d80-8fd8-2f4a6f833ef0" name="Changes" comment="" />
+      <created>1669763107014</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1669763107014</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

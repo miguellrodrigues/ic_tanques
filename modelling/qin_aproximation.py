@@ -42,7 +42,9 @@ y_hat = func(x, *popt)
 
 print(popt)
 
-plt.plot(x, y_hat, label='flow approximated')
 plt.plot(x, y, 'o', label='flow measured')
+plt.plot(x, y_hat, label='flow approximated')
+plt.xlabel('Pump2PC')
+plt.ylabel('Flow rate cm³/s')
 plt.legend()
 plt.show()

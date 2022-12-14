@@ -1,6 +1,5 @@
 import numpy as np
 import control as ct
-import matplotlib.pyplot as plt
 
 A_matrices = [np.load(f'../data/vertices/A{i}.npy') for i in range(8)]
 B_matrices = [np.load(f'../data/vertices/B{i}.npy') for i in range(8)]

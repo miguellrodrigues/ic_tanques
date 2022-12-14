@@ -1,13 +1,13 @@
 import cvxpy as cvx
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 np.set_printoptions(6, suppress=True)
 
 plt.style.use([
-    'notebook',
-    'high-vis',
-    'grid',
+  'notebook',
+  'high-vis',
+  'grid',
 ])
 
 # A = [np.load(f'./data/A_{i}.npy') for i in range(8)]
@@ -39,7 +39,7 @@ Q = cvx.Variable((n, n), symmetric=True)
 Z = [cvx.Variable((nu, n)) for _ in range(n_matrices)]
 
 constraints = [
-  W >> np.eye(n)*1e-6
+  W >> np.eye(n) * 1e-6
 ]
 
 r = 1
@@ -61,19 +61,17 @@ for i in range(n_matrices):
     # LMI = alpha*(W@(Ai+Aj).T + (Zj.T@Bi.T + Zi.T@Bj.T) + (Ai+Aj)@W + Bi@Zj + Bj@Zi)
 
     LMI = cvx.bmat([
-      [-r*W, q*W + alpha*((Ai+Aj)@W + (Bi@Zj + Bj@Zi))],
-      [q*W + alpha*(W@(Ai+Aj).T + (Zj.T@Bi.T + Zi.T@Bj.T)), -r*W]
+      [-r * W, q * W + alpha * ((Ai + Aj) @ W + (Bi @ Zj + Bj @ Zi))],
+      [q * W + alpha * (W @ (Ai + Aj).T + (Zj.T @ Bi.T + Zi.T @ Bj.T)), -r * W]
     ])
 
-    constraints.append(LMI << -np.eye(LMI.shape[0])*1e-6)
+    constraints.append(LMI << -np.eye(LMI.shape[0]) * 1e-6)
     # constraints.append(LMI2 << -np.eye(n)*1e-6)
 
 prob = cvx.Problem(cvx.Minimize(0), constraints)
 prob.solve(verbose=False, solver='MOSEK')
 
 print(prob.status)
-
-import matplotlib.pyplot as plt
 
 P = np.linalg.inv(W.value)
 
@@ -92,10 +90,10 @@ for i in range(n_matrices):
 
 theta_step = .01
 
-theta = np.arange(0, 2*np.pi, theta_step)
+theta = np.arange(0, 2 * np.pi, theta_step)
 
 circle = np.array([np.cos(theta), np.sin(theta)])
 output = np.linalg.inv(np.linalg.cholesky(P)) @ circle
 
-plt.plot(output[0,:], output[1,:])
+plt.plot(output[0, :], output[1, :])
 plt.show()
