@@ -1,5 +1,4 @@
 import numpy as np
-from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
 from experimente_loader import load_data
 
@@ -32,6 +31,8 @@ for i in x:
     y.append(medium_flow)
 
 # # # # # # # # # # # # # # # # # # # #
+
+from scipy.optimize import curve_fit
 
 def func(x, a, b):
     return a * np.exp(-b * x)
