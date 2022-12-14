@@ -16,10 +16,10 @@ r = 31
 mu = 40
 sigma = 55
 
-x = range(10, 70, 5)
+u = range(10, 70, 5)
 y = []
 
-for i in x:
+for i in u:
     t, levels = load_data(f'./qin_data/VAZAO_ENTRADA_{i}')
     h = levels[0]
 
@@ -36,6 +36,8 @@ for i in x:
 def func(x, a, b):
     return a * np.exp(-b * x)
 
+x = np.array(u)
+y = np.array(y)
 
 popt, pcov = curve_fit(func, x, y, p0=[.1, .1])
 y_hat = func(x, *popt)

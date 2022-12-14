@@ -11,24 +11,32 @@ plt.style.use([
     'notebook',
 ])
 
+# #
+
+def q_in(u):
+    return 147.46531*np.exp(-.030642*u)
+
+# #
+
 r = 31
 mu = 40
 sigma = 55
 
-x = range(10, 70, 5)
+u = range(10, 35, 5)
+
+x = []
 y = []
 
-for i in x:
-    t, levels = load_data(f'./q34_data/VAZAO_COMUNICANTE_{i}')
-    h = levels[0]
+for i in u:
+    t, levels = load_data(f'./q34_data/VAZAO_COMUNICANTE_{i}', keys=['t', 'Level3CM', 'Level4CM'])
 
-    area = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h - mu)**2) / (2 * sigma ** 2)))
-    volume = (np.pi*r**2 - area)*h
+    h1 = levels[0]
+    h2 = levels[1]
 
-    flow = np.gradient(volume, t)
-    medium_flow = np.mean(flow)
+    R34 = (h1[-1] - h2[-1]) / q_in(i)
 
-    y.append(medium_flow)
+    x.append(h1[-1] - h2[-1])
+    y.append(R34)
 
 # # # # # # # # # # # # # # # # # # # #
 
@@ -38,12 +46,17 @@ def func(x, a, b):
     return a * np.exp(-b * x)
 
 
-popt, pcov = curve_fit(func, x, y, p0=[.1, .1])
+x = np.array(x)
+y = np.array(y)
+
+popt, pcov = curve_fit(func, x, y)
 y_hat = func(x, *popt)
 
 print(popt)
 
-plt.plot(x, y_hat, label='flow approximated')
-plt.plot(x, y, 'o', label='flow measured')
+plt.plot(x, y_hat, label='R34 approximated')
+plt.plot(x, y, 'o', label='R34 measured')
+plt.xlabel('h1 - h2')
+plt.ylabel('R34')
 plt.legend()
 plt.show()
