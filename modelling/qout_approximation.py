@@ -23,9 +23,9 @@ r = 31
 mu = 40
 sigma = 55
 
-u = range(10, 35, 5)
+u = range(10, 50, 5)
 
-diffs = []
+h = []
 y = []
 
 for i in u:
@@ -34,33 +34,31 @@ for i in u:
     h1 = levels[0][-1]
     h2 = levels[1][-1]
 
-    diff = h1 - h2
+    qout = q_in(i)
 
-    R34 = diff / q_in(i)
-
-    diffs.append(diff)
-    y.append(R34)
+    h.append(h2)
+    y.append(qout)
 
 # # # # # # # # # # # # # # # # # # # #
 
-diffs = np.array(diffs)
+h = np.array(h)
 
 x =  np.arange(
-    np.min(diffs),
-    np.max(diffs) + .1,
+    np.min(h),
+    np.max(h) + 1,
     .1
 )
 
 y = np.array(y)
 
-thetas = np.polyfit(diffs, y, 3)
+thetas = np.polyfit(h, y, 1)
 y_hat = np.polyval(thetas, x)
 
 print(thetas)
 
-plt.plot(diffs, y, 'o', label='R34 measured')
-plt.plot(x, y_hat, label='R34 approximated')
-plt.xlabel('h1 - h2')
-plt.ylabel('R34')
+plt.plot(h, y, 'o', label='Rout measured')
+plt.plot(x, y_hat, label='Rout approximated')
+plt.xlabel('h2')
+plt.ylabel('Rout')
 plt.legend()
 plt.show()
