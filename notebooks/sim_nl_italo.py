@@ -1,68 +1,94 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import scipy.signal as sig
+
+# #
+
+b = np.array([
+    0.13575525, 0.13575525
+])
+
+a = np.array([
+    1.,        -0.7284895
+])
+
+h3_exp = np.load('./experiments/h1_exp.npy')[:-1]
+h4_exp = np.load('./experiments/h2_exp.npy')[:-1]
+
+h3_exp = sig.lfilter(b, a, h3_exp)
+h4_exp = sig.lfilter(b, a, h4_exp)
+
+# #
+
+
 plt.close('all')
 
-Ts = .5
-t = np.arange(0,5000,Ts)
+Ts = 4
+Tf = 10000
+samples = int(Tf/Ts)
 
-h3 = np.empty(len(t))
-h3.fill(np.nan)
-h4 = np.empty(len(t))
-h4.fill(np.nan)
+t = np.linspace(1e-12, Tf, samples)
+
+h3 = np.zeros(samples)
+h4 = np.zeros(samples)
+
+h3_zero = 1e-6
+h4_zero = 1e-6
+
+h3[0] = h3_zero
+h4[0] = h4_zero
 
 r = 31
 mu = 4
 sigma = 55
-a4 = 3019
-
-
-h3[0]=0
-h4[0]=1e-3
+a4 = np.pi*r**2
 
 u = np.empty(len(t))
-u.fill(35)
-Kb = 16.99
 
-R12_t = np.zeros(len(t))
-q0_t = np.zeros(len(t))
-a1_t = np.zeros(len(t))
+degs = np.array([
+    25, 35, 30, 40
+])
 
-for i in range(0,len(t)-1,1):
+frac = int(samples/4)
+
+u[:frac] = degs[0]
+u[frac:frac*2] = degs[1]
+u[frac*2:frac*3] = degs[2]
+u[frac*3:] = degs[3]
+
+def q_in(u):
+    return 147.465291*np.exp(.030642*u)
+
+
+def q_34(diff):
+    return 31.314907*diff + 108.440957
+
+
+def q_out(h4):
+    return 81.958224*np.sqrt(h4) + 11.965677
+
+
+for i in range(1, len(t)):
     H = np.array([
-        [h3[i]],
-        [h4[i]]
+        [h3[i - 1]],
+        [h4[i - 1]]
     ])
 
-    diff = h3[i] - h4[i]
+    diff = h3[i - 1] - h4[i - 1]
 
-    R12 = (.412*diff+11.488)*1e-3
-    q0  = (12.241*h4[i]+868.674)
-    a1  = (3*r/5)*(2.7*r-((np.cos(2.5*np.pi*(h3[i]-8)-mu))/(sigma*np.sqrt(2*np.pi)))*np.exp(-(((h3[i]-8)-mu)**2)/(2*sigma**2)))
+    qin = q_in(u[i - 1])
+    q34 = q_34(diff)
+    qout = q_out(h4[i - 1])
 
-    R12_t[i] = R12
-    q0_t[i] = q0
-    a1_t[i] = a1
+    a1 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3[i - 1] - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3[i - 1] - mu)**2) / (2 * sigma ** 2)))
 
-    z1 = 1/R12
-    z2 = q0/h4[i]
-    z3 = 1/a1
+    h3_dot = (qin - q34)/a1
+    h4_dot = (q34 - qout)/a4
 
-    A = np.array([
-        [-z1*z3, z1*z3],
-        [z1/a4, (-z1-z2)/a4]
-    ])
-
-    B = np.array([
-        [Kb*z3],
-        [.0]
-    ])
-
-    h_dot = A@H + B*u[i]
-
-    #termino calculo area T3
-    h3[i+1] = h3[i] + h_dot[0]*Ts
-    h4[i+1] = h4[i] + h_dot[1]*Ts
+    # termino calculo area T3
+    h3[i] = h3[i - 1] + h3_dot*Ts
+    h4[i] = h4[i - 1] + h4_dot*Ts
 
 
 plt.style.use([
@@ -71,28 +97,11 @@ plt.style.use([
 ])
 
 plt.figure()
-plt.plot(t,h3, label='h3')
-plt.plot(t,h4, label='h4')
-plt.legend()
+plt.plot(t, h3, label='h3 sim')
+plt.plot(t, h3_exp, label='h3 exp')
 
-R12_t[-1] = R12_t[-2]
-q0_t[-1] = q0_t[-2]
-a1_t[-1] = a1_t[-2]
-
-plt.figure()
-plt.plot(h3-h4, R12_t, label='R12')
-plt.legend()
-
-
-plt.figure()
-plt.plot(h4, q0_t, label='q0')
-plt.legend()
-
-
-plt.figure()
-plt.plot(h3, a1_t, label='a1')
-plt.legend()
-
+plt.plot(t, h4, label='h4')
+plt.plot(t, h4_exp, label='h4 exp')
 
 plt.legend()
 plt.show()

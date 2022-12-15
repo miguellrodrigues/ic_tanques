@@ -36,7 +36,7 @@ for i in u:
 
     qout = q_in(i)
 
-    h.append(h2)
+    h.append(np.sqrt(h2))
     y.append(qout)
 
 # # # # # # # # # # # # # # # # # # # #
@@ -56,8 +56,8 @@ y_hat = np.polyval(thetas, x)
 
 print(thetas)
 
-plt.plot(h, y, 'o', label='Rout measured')
-plt.plot(x, y_hat, label='Rout approximated')
+plt.plot(h, y, 'o', label='qout measured')
+plt.plot(x, y_hat, label='qout approximated')
 plt.xlabel('h2')
 plt.ylabel('Rout')
 plt.legend()
