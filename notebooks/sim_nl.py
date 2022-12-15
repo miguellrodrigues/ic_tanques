@@ -30,14 +30,14 @@ samples = int(Tf/Ts)
 
 t = np.linspace(1e-12, Tf, samples)
 
-h3 = np.zeros(samples)
-h4 = np.zeros(samples)
+h3_t = np.zeros(samples)
+h4_t = np.zeros(samples)
 
 h3_zero = 1e-6
 h4_zero = 1e-6
 
-h3[0] = h3_zero
-h4[0] = h4_zero
+h3_t[0] = h3_zero
+h4_t[0] = h4_zero
 
 r = 31
 mu = 4
@@ -62,7 +62,7 @@ def q_in(u):
 
 
 def q_34(diff):
-    return 33.082144*diff + 89.996718
+    return 33.082144*diff + 89.99671
 
 
 def q_out(h4):
@@ -70,25 +70,25 @@ def q_out(h4):
 
 
 for i in range(1, len(t)):
+    h3 = h3_t[i - 1]
+    h4 = h4_t[i - 1]
+
     H = np.array([
-        [h3[i - 1]],
-        [h4[i - 1]]
+        [h3],
+        [h4]
     ])
 
-    diff = h3[i - 1] - h4[i - 1]
+    diff = h3 - h4
 
-    qin = q_in(u[i - 1])
+    qin = q_in(u[i])
     q34 = q_34(diff)
-    qout = q_out(h4[i - 1])
+    qout = q_out(h4)
 
-    a1 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3[i - 1] - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3[i - 1] - mu)**2) / (2 * sigma ** 2)))
-
-    h3_dot = (qin - q34)/a1
-    h4_dot = (q34 - qout)/a4
+    a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3 - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3 - mu)**2) / (2 * sigma ** 2)))
 
     # termino calculo area T3
-    h3[i] = h3[i - 1] + h3_dot*Ts
-    h4[i] = h4[i - 1] + h4_dot*Ts
+    h3_t[i] = h3 + ( (qin - q34)/a3 )*Ts
+    h4_t[i] = h4 + ( (q34 - qout)/a4 )*Ts
 
 
 plt.style.use([
@@ -97,10 +97,10 @@ plt.style.use([
 ])
 
 plt.figure()
-plt.plot(t, h3, label='h3 sim')
+plt.plot(t, h3_t, label='h3 sim')
 plt.plot(t, h3_exp, label='h3 exp')
 
-plt.plot(t, h4, label='h4 sim')
+plt.plot(t, h4_t, label='h4 sim')
 plt.plot(t, h4_exp, label='h4 exp')
 
 plt.legend()
