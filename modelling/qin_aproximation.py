@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from experiment_loader import load_data
-from scipy.optimize import curve_fit
 
 
 np.set_printoptions(precision=6, suppress=True)
@@ -42,13 +41,10 @@ x =  np.arange(
     .1
 )
 
-def func(x, a, b):
-    return a * np.exp(b * x)
+thetas = np.polyfit(u, y, 2)
+print(thetas)
 
-popt, pcov = curve_fit(func, u, y, p0=[.1, .1])
-print(popt)
-
-y_hat = func(x, *popt)
+y_hat = np.polyval(thetas, x)
 
 plt.plot(u, y, 'o', label='flow measured')
 plt.plot(x, y_hat, label='flow approximated')

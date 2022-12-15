@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from experiment_loader import load_data
-from scipy.optimize import curve_fit
 
 
 np.set_printoptions(precision=6, suppress=True)
@@ -15,7 +14,7 @@ plt.style.use([
 # #
 
 def q_in(u):
-    return 147.465291*np.exp(.030642*u)
+    return .215374*u**2 - .411661*u + 180.133588
 
 # #
 
