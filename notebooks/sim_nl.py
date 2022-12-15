@@ -62,7 +62,7 @@ def q_in(u):
 
 
 def q_34(diff):
-    return (33.082144*diff + 89.99671)
+    return 33.082144*diff + 89.996718
 
 
 def q_out(h4):
