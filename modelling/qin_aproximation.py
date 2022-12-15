@@ -33,18 +33,24 @@ for i in u:
 
 # # # # # # # # # # # # # # # # # # # #
 
-def func(x, a, b):
-    return a * np.exp(-b * x)
-
-x = np.array(u)
+u = np.array(u)
 y = np.array(y)
 
-popt, pcov = curve_fit(func, x, y, p0=[.1, .1])
-y_hat = func(x, *popt)
+x =  np.arange(
+    np.min(u),
+    np.max(u) + .1,
+    .1
+)
 
+def func(x, a, b):
+    return a * np.exp(b * x)
+
+popt, pcov = curve_fit(func, u, y, p0=[.1, .1])
 print(popt)
 
-plt.plot(x, y, 'o', label='flow measured')
+y_hat = func(x, *popt)
+
+plt.plot(u, y, 'o', label='flow measured')
 plt.plot(x, y_hat, label='flow approximated')
 plt.xlabel('Pump2PC')
 plt.ylabel('Flow rate cm³/s')

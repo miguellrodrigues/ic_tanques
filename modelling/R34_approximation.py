@@ -15,7 +15,7 @@ plt.style.use([
 # #
 
 def q_in(u):
-    return 147.46531*np.exp(-.030642*u)
+    return 147.465291*np.exp(.030642*u)
 
 # #
 
@@ -25,7 +25,7 @@ sigma = 55
 
 u = range(10, 35, 5)
 
-x = []
+diffs = []
 y = []
 
 for i in u:
@@ -38,24 +38,28 @@ for i in u:
 
     R34 = diff / q_in(i)
 
-    x.append(diff)
+    diffs.append(diff)
     y.append(R34)
 
 # # # # # # # # # # # # # # # # # # # #
 
-def func(x, a, b):
-    return a * np.exp(-b * x)
+diffs = np.array(diffs)
 
-x = np.array(x)
+x =  np.arange(
+    np.min(diffs),
+    np.max(diffs) + .1,
+    .1
+)
+
 y = np.array(y)
 
-popt, pcov = curve_fit(func, x, y)
-y_hat = func(x, *popt)
+thetas = np.polyfit(diffs, y, 3)
+y_hat = np.polyval(thetas, x)
 
-print(popt)
+print(thetas)
 
+plt.plot(diffs, y, 'o', label='R34 measured')
 plt.plot(x, y_hat, label='R34 approximated')
-plt.plot(x, y, 'o', label='R34 measured')
 plt.xlabel('h1 - h2')
 plt.ylabel('R34')
 plt.legend()
