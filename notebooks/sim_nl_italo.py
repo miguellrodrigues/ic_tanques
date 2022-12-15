@@ -58,15 +58,15 @@ u[frac*2:frac*3] = degs[2]
 u[frac*3:] = degs[3]
 
 def q_in(u):
-    return 147.465291*np.exp(.030642*u)
+    return .215374*u**2 - .411661*u + 180.133588
 
 
 def q_34(diff):
-    return 31.314907*diff + 108.440957
+    return (33.082144*diff + 89.99671)
 
 
 def q_out(h4):
-    return 81.958224*np.sqrt(h4) + 11.965677
+    return 86.518236*np.sqrt(h4) - 11.642853
 
 
 for i in range(1, len(t)):
@@ -100,7 +100,7 @@ plt.figure()
 plt.plot(t, h3, label='h3 sim')
 plt.plot(t, h3_exp, label='h3 exp')
 
-plt.plot(t, h4, label='h4')
+plt.plot(t, h4, label='h4 sim')
 plt.plot(t, h4_exp, label='h4 exp')
 
 plt.legend()
