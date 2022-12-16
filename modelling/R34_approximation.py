@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from experiment_loader import load_data
-from scipy.interpolate import lagrange
+from scipy.optimize import curve_fit
+from scipy.interpolate import *
 
 
 np.set_printoptions(precision=6, suppress=True)
@@ -23,9 +24,9 @@ r = 31
 mu = 40
 sigma = 55
 
-u = range(10, 50, 5)
+u = np.array(range(10, 50, 5))
 
-h = []
+diffs = []
 y = []
 
 for i in u:
@@ -34,31 +35,30 @@ for i in u:
     h1 = levels[0][-1]
     h2 = levels[1][-1]
 
-    qout = q_in(i)
+    diff = (h1 - h2)
 
-    h.append(h2)
-    y.append(qout)
+    R34 = diff / q_in(i)
 
-# # # # # # # # # # # # # # # # # # # #
+    diffs.append(diff)
+    y.append(R34)
 
-h = np.array(h)
+
+diffs = np.array(diffs)
+y = np.array(y)
 
 x =  np.arange(
-    np.min(h),
-    np.max(h) + 1,
+    np.min(diffs),
+    np.max(diffs) + 1,
     .1
 )
 
-y = np.array(y)
 
-thetas = np.polyfit(h, y, 1)
-y_hat = np.polyval(thetas, x)
-
+thetas = np.polyfit(diffs, y, 3)
 print(thetas)
 
-plt.plot(h, y, 'o', label='qout measured')
-plt.plot(x, y_hat, label='qout approximated')
-plt.xlabel('h2')
-plt.ylabel('Rout')
-plt.legend()
+y_hat = np.polyval(thetas, x)
+
+plt.plot(diffs, y, 'o', label='R34 measured')
+plt.plot(x, y_hat, label='R34 approximated')
+
 plt.show()

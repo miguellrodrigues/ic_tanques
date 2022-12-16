@@ -87,7 +87,7 @@ for i in range(1, len(t)):
     a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3 - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3 - mu)**2) / (2 * sigma ** 2)))
 
     # termino calculo area T3
-    h3_t[i] = h3 + ( (qin - q34)/a3 )*Ts
+    h3_t[i] = h3 + ( (qin - q34 )/a3 )*Ts
     h4_t[i] = h4 + ( (q34 - qout)/a4 )*Ts
 
 
