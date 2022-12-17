@@ -26,14 +26,14 @@ h4_exp = sig.lfilter(b, a, h4_exp)
 plt.close('all')
 
 
-def R_34(diff):
-    return 0.000006*diff**3 -0.000266*diff**2 + 0.003971*diff + 0.005568
+def q_34(diff):
+        return (33.082144*diff + 89.99671)*0.89930283
 
 def q_out(h4):
-    return 9.785984*h4 + 156.704985
+    return (9.785984*h4 + 156.704985)*1.18231989
 
 
-def simulate(a, b, c):
+def simulate():
     Ts = 4
     Tf = 10000
     samples = int(Tf/Ts)
@@ -44,7 +44,7 @@ def simulate(a, b, c):
     h4_t = np.zeros(samples)
 
     h3_zero = 1e-3
-    h4_zero = 1e-3
+    h4_zero = 1e-4
 
     h3_t[0] = h3_zero
     h4_t[0] = h4_zero
@@ -78,8 +78,12 @@ def simulate(a, b, c):
 
         diff = h3 - h4
 
-        R34 = a*R_34(diff)
-        qout = b*q_out(h4)
+        R34 = (diff / q_34(diff) )
+
+        if diff < 8:
+            R34 = .02
+
+        qout = q_out(h4)
 
         a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3 - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3 - mu)**2) / (2 * sigma ** 2)))
 
@@ -93,7 +97,7 @@ def simulate(a, b, c):
         ])
 
         B = np.array([
-            [c*z3],
+            [13.61200274*z3],
             [.0]
         ])
 
@@ -105,13 +109,13 @@ def simulate(a, b, c):
     return h3_t, h4_t
 
 
-def find_optimal_parameters(y_ode, a_0, b_0, c_0):
+def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
     P = np.array([a_0, b_0, c_0])
-    dP = np.array([.001, .001, .001], dtype=np.float64)
+    dP = np.array([.45, .25, .1], dtype=np.float64)
     best_err = 100
 
     # Diferenciao de alteracao de 'dP' no caso de falha
-    k_si = .01
+    k_si = .1
 
     iterations = 0
     max_iter = 200
@@ -124,8 +128,11 @@ def find_optimal_parameters(y_ode, a_0, b_0, c_0):
             P[i] += dP[i]
 
             # obtem erro
-            h3_t, _ = simulate(P[0], P[1], P[2])
-            err = median_absolute_error(y_ode, h3_t)
+            h3_t, h4_t = simulate(P[0], P[1], P[2])
+            err1 = median_absolute_error(y_ode, h3_t)
+            err2 = median_absolute_error(y1_ode, h4_t)
+
+            err = err1+err2
 
             print(P, err, iterations)
 
@@ -136,8 +143,11 @@ def find_optimal_parameters(y_ode, a_0, b_0, c_0):
             else:
                 P[i] -= 2 * dP[i]
 
-                h3_t, _ = simulate(P[0], P[1], P[2])
-                err = median_absolute_error(h3_t, y_ode)
+                h3_t, h4_t = simulate(P[0], P[1], P[2])
+                err1 = median_absolute_error(y_ode, h3_t)
+                err2 = median_absolute_error(y1_ode, h4_t)
+
+                err = err1+err2
 
                 if err < best_err:
                     best_err = err
@@ -151,9 +161,12 @@ def find_optimal_parameters(y_ode, a_0, b_0, c_0):
     return P
 
 
-# P = find_optimal_parameters(h3_exp, 0.84617798, 1.09323753, 12.89976026)
+# P = find_optimal_parameters(h3_exp, h4_exp, 0.89930283,  1.18231989, 13.61200274)
 
-h3_t, h4_t = simulate(0.84617798, 1.09323753, 12.89976026)
+h3_t, h4_t = simulate()
+
+np.save('./experiments/h1_nl.npy', h3_t)
+np.save('./experiments/h2_nl.npy', h4_t)
 
 plt.figure()
 plt.plot(h3_t, label='h3')
