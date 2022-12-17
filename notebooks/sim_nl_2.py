@@ -27,13 +27,13 @@ plt.close('all')
 
 
 def q_34(diff):
-        return (33.082144*diff + 89.99671)*0.89930283
+        return (33.082144*diff + 89.99671)
 
 def q_out(h4):
-    return (9.785984*h4 + 156.704985)*1.18231989
+    return (9.785984*h4 + 156.704985)
 
 
-def simulate():
+def simulate(a,b,c):
     Ts = 4
     Tf = 10000
     samples = int(Tf/Ts)
@@ -78,12 +78,11 @@ def simulate():
 
         diff = h3 - h4
 
-        R34 = (diff / q_34(diff) )
+        R34 = 0.89762702*(diff / q_34(diff) )
+        if diff < 6:
+            R34 = .06
 
-        if diff < 8:
-            R34 = .02
-
-        qout = q_out(h4)
+        qout = 1.18229826*q_out(h4)
 
         a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3 - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3 - mu)**2) / (2 * sigma ** 2)))
 
@@ -97,7 +96,7 @@ def simulate():
         ])
 
         B = np.array([
-            [13.61200274*z3],
+            [13.61675581*z3],
             [.0]
         ])
 
@@ -111,7 +110,7 @@ def simulate():
 
 def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
     P = np.array([a_0, b_0, c_0])
-    dP = np.array([.45, .25, .1], dtype=np.float64)
+    dP = np.array([.5, .5, .1], dtype=np.float64)
     best_err = 100
 
     # Diferenciao de alteracao de 'dP' no caso de falha
@@ -163,7 +162,7 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
 
 # P = find_optimal_parameters(h3_exp, h4_exp, 0.89930283,  1.18231989, 13.61200274)
 
-h3_t, h4_t = simulate()
+h3_t, h4_t = simulate(0,0,0)
 
 np.save('./experiments/h1_nl.npy', h3_t)
 np.save('./experiments/h2_nl.npy', h4_t)
