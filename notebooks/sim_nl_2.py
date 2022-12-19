@@ -18,14 +18,11 @@ from scipy.io import loadmat
 
 mat = loadmat('./experiments/VAZAO_COMUNICANTE_50.mat')
 
-# h3_exp = np.array(mat['Level3CM']).flatten()
-# h4_exp = np.array(mat['Level4CM']).flatten()
-
 h3_exp = np.load('./experiments/h1_exp.npy')[:-1]
 h4_exp = np.load('./experiments/h2_exp.npy')[:-1]
 
-h3_exp = sig.filtfilt(b, a, h3_exp)
-h4_exp = sig.filtfilt(b, a, h4_exp)
+h3_exp = sig.lfilter(b, a, h3_exp)
+h4_exp = sig.lfilter(b, a, h4_exp)
 
 # #
 
@@ -39,37 +36,36 @@ def R_34(diff):
 def q_out(h4):
     return -0.049605*h4**2+10.759176*h4+157.705535
 
+Ts = 4
+samples = len(h3_exp)
+Tf = samples*Ts
+
+t = np.linspace(1e-12, Tf, samples)
+
+r = 31
+mu = 40
+sigma = 55
+a4 = np.pi*r**2
+
+u = np.empty(len(t))
+
+degs = np.array([
+    25, 35, 30, 40
+])
+
+frac = int(samples/4)
+
+u[:frac] = degs[0]
+u[frac:frac*2] = degs[1]
+u[frac*2:frac*3] = degs[2]
+u[frac*3:] = degs[3]
 
 def simulate(a,b):
-    Ts = 4
-    samples = len(h3_exp)
-    Tf = samples*Ts
-
-    t = np.linspace(1e-12, Tf, samples)
-
     h3_t = np.zeros(samples)
     h4_t = np.zeros(samples)
 
     h3_t[0] = h3_exp[0]
     h4_t[0] = h4_exp[0]
-
-    r = 31
-    mu = 40
-    sigma = 55
-    a4 = np.pi*r**2
-
-    u = np.empty(len(t))
-
-    degs = np.array([
-        25, 35, 30, 40
-    ])
-
-    frac = int(samples/4)
-
-    u[:frac] = degs[0]
-    u[frac:frac*2] = degs[1]
-    u[frac*2:frac*3] = degs[2]
-    u[frac*3:] = degs[3]
 
     for i in range(1, len(t)):
         h3 = h3_t[i - 1]
@@ -97,7 +93,7 @@ def simulate(a,b):
         ])
 
         B = np.array([
-            [15.98*z3],
+            [16*z3],
             [.0]
         ])
 
@@ -111,7 +107,7 @@ def simulate(a,b):
 
 def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
     P = np.array([a_0, b_0])
-    dP = np.array([.01, .01], dtype=np.float64)
+    dP = np.array([.1, .1], dtype=np.float64)
     best_err = 100
 
     k_si = .25
@@ -162,8 +158,8 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
     return P
 
 
-P = find_optimal_parameters(h3_exp, h4_exp, 0.73899786, 1.39534712)
-h3_t, h4_t = simulate(*P)
+P = find_optimal_parameters(h3_exp, h4_exp, .73800289, 1.39710862)
+h3_t, h4_t = simulate(.73800289, 1.39710862)
 
 np.save('./experiments/h1_nl.npy', h3_t)
 np.save('./experiments/h2_nl.npy', h4_t)
