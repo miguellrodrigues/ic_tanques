@@ -15,14 +15,14 @@ r = 31
 mu = 40
 sigma = 55
 
-u = range(10, 70, 5)
+u = range(10, 50, 5)
 y = []
 
 for i in u:
     t, levels = load_data(f'./qin_data/VAZAO_ENTRADA_{i}')
     h = levels[0]
 
-    area = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h - mu)**2) / (2 * sigma ** 2)))
+    area = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*(h - 8.) - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-(((h - 8.) - mu)**2) / (2 * sigma ** 2)))
     volume = (np.pi*r**2 - area)*h
 
     flow = np.gradient(volume, t)
@@ -36,7 +36,7 @@ u = np.array(u)
 y = np.array(y)
 
 x =  np.arange(
-    np.min(u),
+    np.min(u) - .1,
     np.max(u) + .1,
     .1
 )

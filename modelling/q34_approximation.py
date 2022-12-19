@@ -12,9 +12,9 @@ plt.style.use([
 ])
 
 # #
-
+qin = np.array([0.100771  , 4.435961, 139.190782])
 def q_in(u):
-    return .215374*u**2 - .411661*u + 180.133588
+    return np.polyval(qin, u)
 
 # #
 
@@ -33,7 +33,7 @@ for i in u:
     h1 = levels[0][-1]
     h2 = levels[1][-1]
 
-    diff = (h1 - h2)
+    diff = h1 - h2
 
     diffs.append(diff)
     y.append(q_in(i))
@@ -50,7 +50,7 @@ x =  np.arange(
 
 y = np.array(y)
 
-thetas = np.polyfit(diffs, y, 1)
+thetas = np.polyfit(diffs, y, 2)
 y_hat = np.polyval(thetas, x)
 
 print(thetas)

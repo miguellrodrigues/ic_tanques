@@ -14,11 +14,18 @@ a = np.array([
     1.,        -0.7284895
 ])
 
+from scipy.io import loadmat
+
+mat = loadmat('./experiments/VAZAO_COMUNICANTE_50.mat')
+
+# h3_exp = np.array(mat['Level3CM']).flatten()
+# h4_exp = np.array(mat['Level4CM']).flatten()
+
 h3_exp = np.load('./experiments/h1_exp.npy')[:-1]
 h4_exp = np.load('./experiments/h2_exp.npy')[:-1]
 
-h3_exp = sig.lfilter(b, a, h3_exp)
-h4_exp = sig.lfilter(b, a, h4_exp)
+h3_exp = sig.filtfilt(b, a, h3_exp)
+h4_exp = sig.filtfilt(b, a, h4_exp)
 
 # #
 
@@ -26,31 +33,28 @@ h4_exp = sig.lfilter(b, a, h4_exp)
 plt.close('all')
 
 
-def q_34(diff):
-        return (33.082144*diff + 89.99671)
+def R_34(diff):
+    return -0.000071183*diff**2 + 0.002279342*diff + 0.009212421
 
 def q_out(h4):
-    return (9.785984*h4 + 156.704985)
+    return -0.049605*h4**2+10.759176*h4+157.705535
 
 
-def simulate(a,b,c):
+def simulate(a,b):
     Ts = 4
-    Tf = 10000
-    samples = int(Tf/Ts)
+    samples = len(h3_exp)
+    Tf = samples*Ts
 
     t = np.linspace(1e-12, Tf, samples)
 
     h3_t = np.zeros(samples)
     h4_t = np.zeros(samples)
 
-    h3_zero = 1e-3
-    h4_zero = 1e-4
-
-    h3_t[0] = h3_zero
-    h4_t[0] = h4_zero
+    h3_t[0] = h3_exp[0]
+    h4_t[0] = h4_exp[0]
 
     r = 31
-    mu = 4
+    mu = 40
     sigma = 55
     a4 = np.pi*r**2
 
@@ -78,13 +82,10 @@ def simulate(a,b,c):
 
         diff = h3 - h4
 
-        R34 = 0.89762702*(diff / q_34(diff) )
-        if diff < 6:
-            R34 = .06
+        R34 = a*R_34(diff)
+        qout = b*q_out(h4)
 
-        qout = 1.18229826*q_out(h4)
-
-        a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*h3 - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-((h3 - mu)**2) / (2 * sigma ** 2)))
+        a3 = (3 * r / 5) * (2.7 * r - ((np.cos(2.5*np.pi*(h3 - 8.) - mu)) / (sigma * np.sqrt(2 * np.pi))) * np.exp(-(((h3 - 8.) - mu)**2) / (2 * sigma ** 2)))
 
         z1 = 1/R34
         z2 = qout/h4
@@ -96,7 +97,7 @@ def simulate(a,b,c):
         ])
 
         B = np.array([
-            [13.61675581*z3],
+            [15.98*z3],
             [.0]
         ])
 
@@ -108,16 +109,15 @@ def simulate(a,b,c):
     return h3_t, h4_t
 
 
-def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
-    P = np.array([a_0, b_0, c_0])
-    dP = np.array([.5, .5, .1], dtype=np.float64)
+def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
+    P = np.array([a_0, b_0])
+    dP = np.array([.01, .01], dtype=np.float64)
     best_err = 100
 
-    # Diferenciao de alteracao de 'dP' no caso de falha
-    k_si = .1
+    k_si = .25
 
     iterations = 0
-    max_iter = 200
+    max_iter = 100
 
     while best_err > .1:
         if iterations > max_iter:
@@ -127,11 +127,12 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
             P[i] += dP[i]
 
             # obtem erro
-            h3_t, h4_t = simulate(P[0], P[1], P[2])
+            h3_t, h4_t = simulate(*P)
+
             err1 = median_absolute_error(y_ode, h3_t)
             err2 = median_absolute_error(y1_ode, h4_t)
 
-            err = err1+err2
+            err = (err1 + err2) / 2
 
             print(P, err, iterations)
 
@@ -142,11 +143,12 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
             else:
                 P[i] -= 2 * dP[i]
 
-                h3_t, h4_t = simulate(P[0], P[1], P[2])
+                h3_t, h4_t = simulate(*P)
+
                 err1 = median_absolute_error(y_ode, h3_t)
                 err2 = median_absolute_error(y1_ode, h4_t)
 
-                err = err1+err2
+                err = (err1 + err2) / 2
 
                 if err < best_err:
                     best_err = err
@@ -160,9 +162,8 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
     return P
 
 
-# P = find_optimal_parameters(h3_exp, h4_exp, 0.89930283,  1.18231989, 13.61200274)
-
-h3_t, h4_t = simulate(0,0,0)
+P = find_optimal_parameters(h3_exp, h4_exp, 0.73899786, 1.39534712)
+h3_t, h4_t = simulate(*P)
 
 np.save('./experiments/h1_nl.npy', h3_t)
 np.save('./experiments/h2_nl.npy', h4_t)

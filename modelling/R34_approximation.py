@@ -1,11 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from experiment_loader import load_data
-from scipy.optimize import curve_fit
 from scipy.interpolate import *
 
 
-np.set_printoptions(precision=6, suppress=True)
+np.set_printoptions(precision=9, suppress=True)
 
 plt.style.use([
     'grid',
@@ -15,8 +14,8 @@ plt.style.use([
 
 # #
 
-def q_in(u):
-    return .215374*u**2 - .411661*u + 180.133588
+def q_34(diff):
+    return -0.164211*diff**2+31.428672*diff+107.711073
 
 # #
 
@@ -35,9 +34,9 @@ for i in u:
     h1 = levels[0][-1]
     h2 = levels[1][-1]
 
-    diff = (h1 - h2)
+    diff = h1 - h2
 
-    R34 = diff / q_in(i)
+    R34 = diff / q_34(diff)
 
     diffs.append(diff)
     y.append(R34)
@@ -47,13 +46,15 @@ diffs = np.array(diffs)
 y = np.array(y)
 
 x =  np.arange(
-    np.min(diffs),
-    np.max(diffs) + 1,
+    np.min(diffs) - .1,
+    np.max(diffs) + .1,
     .1
 )
 
+print(np.min(diffs))
+print(np.max(diffs))
 
-thetas = np.polyfit(diffs, y, 3)
+thetas = np.polyfit(diffs, y, 2)
 print(thetas)
 
 y_hat = np.polyval(thetas, x)
