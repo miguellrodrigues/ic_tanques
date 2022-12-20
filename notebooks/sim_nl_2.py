@@ -21,8 +21,8 @@ mat = loadmat('./experiments/VAZAO_COMUNICANTE_50.mat')
 h3_exp = np.load('./experiments/h1_exp.npy')[:-1]
 h4_exp = np.load('./experiments/h2_exp.npy')[:-1]
 
-# h3_exp = sig.filtfilt(b, a, h3_exp)
-# h4_exp = sig.filtfilt(b, a, h4_exp)
+h3_exp = sig.filtfilt(b, a, h3_exp)
+h4_exp = sig.filtfilt(b, a, h4_exp)
 
 # #
 
@@ -61,7 +61,7 @@ u[frac:frac*2] = degs[1]
 u[frac*2:frac*3] = degs[2]
 u[frac*3:] = degs[3]
 
-def simulate(a,b):
+def simulate(a,b,c):
     h3_t = np.zeros(samples)
     h4_t = np.zeros(samples)
 
@@ -94,7 +94,7 @@ def simulate(a,b):
         ])
 
         B = np.array([
-            [15.98*z3],
+            [c*15.95*z3],
             [.0]
         ])
 
@@ -106,9 +106,9 @@ def simulate(a,b):
     return h3_t, h4_t
 
 
-def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
-    P = np.array([a_0, b_0])
-    dP = np.array([.1, .1], dtype=np.float64)
+def find_optimal_parameters(y_ode, y1_ode, a_0, b_0, c_0):
+    P = np.array([a_0, b_0, c_0])
+    dP = np.array([.1, .1, .1], dtype=np.float64)
     best_err = 100
 
     k_si = .25
@@ -159,8 +159,8 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
     return P
 
 
-# P = find_optimal_parameters(h3_exp, h4_exp, .74198493, 1.39581015)
-h3_t, h4_t = simulate(.74198493, 1.39581015)
+# P = find_optimal_parameters(h3_exp, h4_exp, .73800289, 1.39710862, 1.00731487)
+h3_t, h4_t = simulate(0.7386225, 1.39949213, 1.00502982)
 
 np.save('./experiments/h1_nl.npy', h3_t)
 np.save('./experiments/h2_nl.npy', h4_t)
