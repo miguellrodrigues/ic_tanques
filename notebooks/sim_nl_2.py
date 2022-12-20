@@ -36,6 +36,7 @@ def R_34(diff):
 def q_out(h4):
     return -0.049605*h4**2+10.759176*h4+157.705535
 
+
 Ts = 4
 samples = len(h3_exp)
 Tf = samples*Ts
@@ -158,7 +159,7 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
     return P
 
 
-P = find_optimal_parameters(h3_exp, h4_exp, .73800289, 1.39710862)
+# P = find_optimal_parameters(h3_exp, h4_exp, .73800289, 1.39710862)
 h3_t, h4_t = simulate(.73800289, 1.39710862)
 
 np.save('./experiments/h1_nl.npy', h3_t)

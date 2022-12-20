@@ -14,7 +14,7 @@ plt.style.use([
 
 # #
 
-qin = np.array([0.100771  , 4.435961, 139.190782])
+qin = np.array([0.100771, 4.435961, 139.190782])
 def q_in(u):
     return np.polyval(qin, u)
 
