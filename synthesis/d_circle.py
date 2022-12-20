@@ -16,8 +16,8 @@ m = B_matrices[0].shape[1]
 
 # #
 
-q = 2
-r = 1.99
+q = 1
+r = .8
 
 # #
 
