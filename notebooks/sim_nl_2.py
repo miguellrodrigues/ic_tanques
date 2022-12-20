@@ -21,8 +21,8 @@ mat = loadmat('./experiments/VAZAO_COMUNICANTE_50.mat')
 h3_exp = np.load('./experiments/h1_exp.npy')[:-1]
 h4_exp = np.load('./experiments/h2_exp.npy')[:-1]
 
-h3_exp = sig.filtfilt(b, a, h3_exp)
-h4_exp = sig.filtfilt(b, a, h4_exp)
+# h3_exp = sig.filtfilt(b, a, h3_exp)
+# h4_exp = sig.filtfilt(b, a, h4_exp)
 
 # #
 
@@ -159,8 +159,8 @@ def find_optimal_parameters(y_ode, y1_ode, a_0, b_0):
     return P
 
 
-P = find_optimal_parameters(h3_exp, h4_exp, .73800289, 1.39710862)
-h3_t, h4_t = simulate(*P)
+# P = find_optimal_parameters(h3_exp, h4_exp, .74198493, 1.39581015)
+h3_t, h4_t = simulate(.74198493, 1.39581015)
 
 np.save('./experiments/h1_nl.npy', h3_t)
 np.save('./experiments/h2_nl.npy', h4_t)
